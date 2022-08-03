@@ -1,28 +1,53 @@
 import Header from "../Header";
 import Menu from "../Menu";
 
+import TrashIcon from '../../assets/images/trash.svg'
+
 import { 
-  Container
+  Container,
+  AddButton,
+  AddArea,
+  DayButton,
+  Button,
+  HabitArea
 } from "./style";
 
 const AddHabit = () => {
   return (
-    <div>
+    <AddArea>
       <input placeholder="nome" />
       <span>
-        <button>D</button>
-        <button>S</button>
-        <button>T</button>
-        <button>Q</button>
-        <button>Q</button>
-        <button>S</button>
-        <button>S</button>
+        <DayButton selected={true} >D</DayButton>
+        <DayButton>S</DayButton>
+        <DayButton>T</DayButton>
+        <DayButton>Q</DayButton>
+        <DayButton>Q</DayButton>
+        <DayButton>S</DayButton>
+        <DayButton>S</DayButton>
       </span>
+      <div>
+        <Button type="link" >Cancelar</Button>
+        <Button>Salvar</Button>
+      </div>
+    </AddArea>
+  )
+}
+
+const Habit = () => {
+  return (
+    <HabitArea>
+      <h1>Ler 1 capitulo de livro</h1>
+      <img src={TrashIcon} alt='' />
       <span>
-        <button>cancelar</button>
-        <button>salvar</button>
+        <DayButton selected={true} >D</DayButton>
+        <DayButton>S</DayButton>
+        <DayButton>T</DayButton>
+        <DayButton>Q</DayButton>
+        <DayButton>Q</DayButton>
+        <DayButton>S</DayButton>
+        <DayButton>S</DayButton>
       </span>
-    </div>
+    </HabitArea>
   )
 }
 
@@ -33,12 +58,16 @@ const HabitPage = () => {
       <Container>
         <span>
           <h1>Meus hábitos</h1>
-          <button>+</button>
+          <AddButton>+</AddButton>
         </span>
         <div>
           <AddHabit />
           <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
         </div>
+
+        <Habit />
+        <Habit />
+
       </Container>
       <Menu />
     </>
