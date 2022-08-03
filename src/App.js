@@ -14,6 +14,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={ <LoginPage /> } />
+          <Route path='/cadastro' element={ <SignUpPage /> } />
+
         </Routes>
       </BrowserRouter>
     </>
