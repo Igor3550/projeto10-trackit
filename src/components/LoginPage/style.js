@@ -20,6 +20,7 @@ export const Container = styled.div`
     margin: 20px 0;
 
     input {
+      width: 100%;
       margin: 5px 0;
       padding: 0 5px;
       height: 45px;
@@ -38,6 +39,7 @@ export const Button = styled.button`
   ${({type = 'normal'}) => {
     if(type === 'normal'){
       return `
+        width: 100%;
         margin: 5px 0;
         height: 45px;
         border: 0;
@@ -48,6 +50,7 @@ export const Button = styled.button`
       `;
     }else{
       return `
+        width: 100%;
         font-size: 14px;
         color: #52B6FF;
         text-decoration: underline;

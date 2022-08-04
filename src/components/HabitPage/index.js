@@ -1,3 +1,7 @@
+import { useState, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+
+import UserToken from "../../contexts/UserToken";
 import Header from "../Header";
 import Menu from "../Menu";
 
@@ -52,6 +56,13 @@ const Habit = () => {
 }
 
 const HabitPage = () => {
+
+  const { token } = useContext(UserToken);
+
+  useEffect(() => {
+    console.log('')
+  }, [])
+
   return (
     <>
       <Header />

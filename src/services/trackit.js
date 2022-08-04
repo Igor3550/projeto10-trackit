@@ -2,6 +2,16 @@ import axios from "axios";
 
 const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth';
 
+function createHeaders(token) {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  };
+
+  return config;
+}
+
 function signup (body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
   return promise;
@@ -17,8 +27,9 @@ function createHabit (body) {
   return promise;
 }
 
-function getHabits () {
-  const promise = axios.get(`${BASE_URL}/habits`);
+function getHabits (token) {
+  const config = createHeaders(token);
+  const promise = axios.get(`${BASE_URL}/habits`, config);
   return promise;
 }
 

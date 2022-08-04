@@ -16,20 +16,21 @@ export const Container = styled.div`
   left: 0;
   bottom: 0;
 
-  div {
-    width: 90px;
-    height: 90px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+`;
 
-    background-color: #52B6FF;
-    font-size: 18px;
-    color: #fff;
-    border-radius: 50%;
+export const CenterButton = styled.div`
+  width: 90px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    position: absolute;
-    left: calc(50% - 45px);
-    bottom: 10px;
-  }
+  background-color: #52B6FF;
+  font-size: 18px;
+  color: #fff;
+  border-radius: 50%;
+
+  position: absolute;
+  left: calc(50% - 45px);
+  bottom: 10px;
 `;
