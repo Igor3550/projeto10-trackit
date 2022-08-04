@@ -5,7 +5,7 @@ import SignUpPage from './components/SignUpPage'
 import TodayPage from './components/TodayPage'
 import HabitPage from './components/HabitPage'
 import HistoryPage from './components/HistoryPage'
-import GlobalStyle from './components/styles/GlobalStyle'
+import GlobalStyle from './styles/GlobalStyle'
 
 function App() {
   return (

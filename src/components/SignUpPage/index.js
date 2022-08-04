@@ -1,5 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import { signup } from '../../services/trackit';
+
+import LoadingPage from '../LoadingPage';
 
 import Logo from '../../assets/images/Group8.png';
 import { 
@@ -10,22 +13,80 @@ import {
 const SignUpPage = () => {
   const navigate = useNavigate()
 
-  function handleLoginClick () {
-    navigate('/')
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userImgUrl, setUserImageUrl] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  function handleSubmitClick (e) {
+    e.preventDefault()
+    setLoading(true);
+
+    const body = {
+      email,
+      name,
+      image: userImgUrl,
+      password
+    }
+
+    const promise = signup(body);
+    promise.catch((error) => {
+      setLoading(false);
+      console.log(error);
+      if(error.response.status === 409) {
+        alert(`Usuário já cadastrado!`)
+      }else{
+        alert(`Ouve um erro inesperado: ${error.message}`)
+      }
+    })
+    promise.then((res) => {
+      setLoading(false);
+      navigate('/');
+    })
   }
 
   return (
+    <>
+    {loading ? <LoadingPage /> : ''}
     <Container>
       <img src={Logo} alt="" />
       <div>
-        <input type="email" placeholder="email" />
-        <input type="password" placeholder="senha" />
-        <input type="text" placeholder="nome" />
-        <input type="text" placeholder="foto" />
-        <Button>Cadastrar</Button>
-        <Button type="link" onClick={handleLoginClick} >Já tem uma conta? Faça login!</Button>
+        <form onSubmit={handleSubmitClick}>
+          <input 
+            required
+            type="email" 
+            placeholder="email"
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input 
+            required
+            type="password" 
+            placeholder="senha" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <input 
+            required
+            type="text" 
+            placeholder="nome" 
+            value={name} 
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input 
+            required
+            type="text" 
+            placeholder="foto"
+            value={userImgUrl} 
+            onChange={(e) => setUserImageUrl(e.target.value)}
+          />
+          <Button>Cadastrar</Button>
+        </form>
+        <Button type="link" onClick={() => {navigate('/')}} >Já tem uma conta? Faça login!</Button>
       </div>
     </Container>
+    </>
   )
 }
 
