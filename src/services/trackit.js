@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth';
+const BASE_URL = 'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit';
 
 function createHeaders(token) {
   const config = {
@@ -13,17 +13,18 @@ function createHeaders(token) {
 }
 
 function signup (body) {
-  const promise = axios.post(`${BASE_URL}/sign-up`, body);
+  const promise = axios.post(`${BASE_URL}/auth/sign-up`, body);
   return promise;
 }
 
 function login (body) {
-  const promise = axios.post(`${BASE_URL}/login`, body);
+  const promise = axios.post(`${BASE_URL}/auth/login`, body);
   return promise;
 }
 
-function createHabit (body) {
-  const promise = axios.post(`${BASE_URL}/habits`, body);
+function createHabit (body, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits`, body, config);
   return promise;
 }
 
@@ -33,8 +34,9 @@ function getHabits (token) {
   return promise;
 }
 
-function deleteHabit (habitId) {
-  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`);
+function deleteHabit (habitId, token) {
+  const config = createHeaders(token);
+  const promise = axios.delete(`${BASE_URL}/habits/${habitId}`, config);
   return promise;
 }
 

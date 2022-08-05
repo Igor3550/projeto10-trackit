@@ -14,6 +14,9 @@ const Container = styled.div`
   position: fixed;
   transition: all 0.2s linear;
   opacity: ${props => props.opacity ? props.opacity : 0};
+  z-index: 10;
+  left: 0;
+  top: 0;
 
   div {
     width: 100px;
