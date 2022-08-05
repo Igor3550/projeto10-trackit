@@ -28,10 +28,6 @@ const HabitPage = () => {
     getHabitList();
   }, [])
 
-  useEffect(() => {
-    getHabitList();
-  }, [showHabitForm]);
-
   function getHabitList () {
     const promise = getHabits(token);
     promise.catch((error) => {
@@ -40,7 +36,6 @@ const HabitPage = () => {
       setLoading(false);
     })
     promise.then((res) => {
-      console.log(res.data);
       setUserHabitsList(res.data);
       setLoading(false);
     });
@@ -56,7 +51,13 @@ const HabitPage = () => {
           <AddButton  onClick={() => {setShowHabitForm(true)}}>+</AddButton>
         </span>
 
-        {showHabitForm ? <AddHabitForm setShowHabitForm={setShowHabitForm} setLoading={setLoading} /> : <></>}
+        {showHabitForm ? 
+          <AddHabitForm 
+            setShowHabitForm={setShowHabitForm} 
+            setLoading={setLoading} 
+            getHabitList={getHabitList}
+          /> : <></>
+        }
 
         {userHabitsList.length === 0 ? (
           <div>
@@ -64,7 +65,15 @@ const HabitPage = () => {
           </div>
         ):
         (
-          userHabitsList.map((habit, index) => <Habit habit={habit} key={index} token={token} />)
+          userHabitsList.map((habit, index) => 
+            <Habit 
+              habit={habit} 
+              key={index} 
+              token={token} 
+              setLoading={setLoading} 
+              getHabitList={getHabitList} 
+            />
+          )
         )
         }
 

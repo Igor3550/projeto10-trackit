@@ -8,7 +8,7 @@ import {
   HabitArea,
 } from './style';
 
-const Habit = ({ habit, token }) => {
+const Habit = ({ habit, token, setLoading, getHabitList }) => {
 
   const [daysList, setDaysList] = useState([
     {name: 'D', selected: false},
@@ -37,13 +37,25 @@ const Habit = ({ habit, token }) => {
   }, [])
 
   function handleDeleteClick () {
-    console.log('');
+    setLoading(true)
+    const promise = deleteHabit(habit.id, token);
+    promise.catch((error) => {
+      console.log(error);
+      alert(`Ocorrey um erro: ${error.message}`)
+      setLoading(false);
+      getHabitList();
+    })
+    promise.then(res => {
+      console.log(res.data);
+      setLoading(false);
+      getHabitList();
+    })
   }
 
   return (
     <HabitArea>
       <h1>{habit.name}</h1>
-      <img src={TrashIcon} alt='' />
+      <img src={TrashIcon} alt='' onClick={handleDeleteClick} />
       <span>
         <WeekComponent daysList={daysList} setDaysList={setDaysList} settable={false}/>
       </span>

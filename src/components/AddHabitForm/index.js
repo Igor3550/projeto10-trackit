@@ -15,7 +15,7 @@ import {
 var weekday = require('dayjs/plugin/weekday')
 dayjs.extend(weekday)
 
-const AddHabitForm = ({ setShowHabitForm, setLoading }) => {
+const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
 
   const { token } = useContext(UserToken)
 
@@ -55,10 +55,12 @@ const AddHabitForm = ({ setShowHabitForm, setLoading }) => {
         alert(`Ocorreu um erro: ${error.message}`);
         console.log(error);
         setLoading(false)
+        getHabitList();
       })
       promise.then((res) => {
         setLoading(false)
         setShowHabitForm(false);
+        getHabitList();
       })
     }
 
@@ -71,7 +73,7 @@ const AddHabitForm = ({ setShowHabitForm, setLoading }) => {
         value={habitName}
         onChange={(e) => {setHabitName(e.target.value)}}
       />
-      <WeekComponent daysList={daysList} setDaysList={setDaysList} />
+      <WeekComponent daysList={daysList} setDaysList={setDaysList} settable={true} />
       <div>
         <Button type="link" onClick={() => {setShowHabitForm(false)}} >Cancelar</Button>
         <Button onClick={handleSubmit}>Salvar</Button>
