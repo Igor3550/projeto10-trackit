@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import dayjs from 'dayjs';
 import UserToken from '../../contexts/UserToken';
 import { useContext } from 'react';
 
@@ -11,9 +10,6 @@ import {
   AddArea,
   Button
 } from './style'
-
-var weekday = require('dayjs/plugin/weekday')
-dayjs.extend(weekday)
 
 const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
 
@@ -31,8 +27,6 @@ const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
   ]);
 
   function handleSubmit () {
-    setLoading(true);
-
     const days = []
 
     for(let i=0; i<daysList.length; i++){
@@ -45,6 +39,8 @@ const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
     if(days.length === 0 || habitName === ''){
       alert('Preencha os campos corretamente!');
     }else{
+      setLoading(true);
+      
       const body = {
         name: habitName,
         days

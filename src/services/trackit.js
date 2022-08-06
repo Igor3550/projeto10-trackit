@@ -40,17 +40,20 @@ function deleteHabit (habitId, token) {
   return promise;
 }
 
-function getTodayHabits () {
-  const promise = axios.get(`${BASE_URL}/habits/today`);
+function getTodayHabits (token) {
+  const config = createHeaders(token);
+  const promise = axios.get(`${BASE_URL}/habits/today`, config);
   return promise;
 }
-function checkHabit (habitId) {
-  const promise = axios.get(`${BASE_URL}/habits/${habitId}/check`);
+function checkHabit (habitId, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits/${habitId}/check`, {}, config);
   return promise;
 }
 
-function unCheckHabit (habitId) {
-  const promise = axios.get(`${BASE_URL}/habits/${habitId}/uncheck`);
+function unCheckHabit (habitId, token) {
+  const config = createHeaders(token);
+  const promise = axios.post(`${BASE_URL}/habits/${habitId}/uncheck`, {}, config);
   return promise;
 }
 

@@ -16,6 +16,7 @@ import {
 } from "./style";
 
 const HabitPage = () => {
+  const navigate = useNavigate()
 
   const { token } = useContext(UserToken);
 
@@ -31,9 +32,14 @@ const HabitPage = () => {
   function getHabitList () {
     const promise = getHabits(token);
     promise.catch((error) => {
-      alert(`Ocorreu um erro: ${error. message}`);
       console.log(error);
       setLoading(false);
+      if(error.response.status === 422){
+        navigate('/');
+        alert(`Usuário deslogado!`);
+      }else{
+        alert(`Ocorreu um erro: ${error.message}`)
+      }
     })
     promise.then((res) => {
       setUserHabitsList(res.data);

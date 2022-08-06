@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+
+import UserHabitsPercentage from "../../contexts/UserHabitsPercentage";
 
 import {
   Container,
@@ -10,7 +12,8 @@ import {
 
 const Menu = () => {
   const navigate = useNavigate()
-  const [percentage, setPercentage] = useState(50)
+
+  const { habitsPercentage, setHabitPercentage } = useContext(UserHabitsPercentage)
 
   return (
     <Container>
@@ -19,7 +22,7 @@ const Menu = () => {
       </div>
       <CenterButton onClick={() => { navigate('/hoje') }}>
         <CircularProgressbar
-          value={percentage}
+          value={habitsPercentage}
           text={`Hoje`}
           background
           backgroundPadding={6}

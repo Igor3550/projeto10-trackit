@@ -1,48 +1,100 @@
+import dayjs from 'dayjs';
+import { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Header from "../Header";
 import Menu from "../Menu";
-
-import CheckIcon from '../../assets/images/check.svg'
+import LoadingPage from '../LoadingPage'
+import UserToken from '../../contexts/UserToken';
+import UserHabitsPercentage from '../../contexts/UserHabitsPercentage';
+import TodayHabit from '../TodayHabit'
+import { getTodayHabits } from '../../services/trackit';
 
 import {
   Container,
   Title,
-  HabitArea,
-  CheckBox,
   Text
 } from './style'
 
-const Habit = ({ checked=false }) => {
+function getTodayDate () {
+  require('dayjs/locale/pt')
+  
+  const date = dayjs(new Date()).locale('pt').format('dddd, DD/MM')
 
-  const textColor = (checked ? '#8FC549' : '#666666')
-
-  return (
-    <HabitArea>
-      <div>
-        <h1>Ler 1 capitulo de livro</h1>
-        <p>Sequência atual: <Text color={textColor} >3 dias</Text></p>
-        <p>Seu recorde: 5 dias</p>
-      </div>
-      <CheckBox checked={checked}>
-        <img src={CheckIcon} alt="" />
-      </CheckBox>
-    </HabitArea>
-  )
+  return date;
 }
 
 const TodayPage = () => {
+  const navigate = useNavigate();
+
+  const { token } = useContext(UserToken);
+  const { habitsPercentage, setHabitsPercentage } = useContext(UserHabitsPercentage);
+
+  const [todayHabits, setTodayHabits] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    getTodayHabitList();
+  }, [])
+
+  function setPercentage (habits) {
+    const doneHabits = []
+
+    habits.forEach(habit => {
+      if(habit.done){
+        doneHabits.push(habit);
+      }
+    });
+
+    const percentage = parseInt((100 * doneHabits.length) / habits.length);
+    setHabitsPercentage(percentage);
+  }
+
+  function getTodayHabitList () {
+    const promise = getTodayHabits(token);
+    promise.catch(error => {
+      console.log(error);
+      if(error.response.status === 422){
+        navigate('/');
+        setLoading(false);
+        alert(`Usuário deslogado!`);
+      }else{
+        alert(`Ocorreu um erro: ${error.message}`)
+        setLoading(false);
+      }
+    })
+    promise.then(res => {
+      console.log(res.data);
+      setPercentage(res.data);
+      setTodayHabits(res.data);
+      setLoading(false);
+    })
+  }
+
   return (
     <>
+      {loading ? <LoadingPage /> : <></>}
       <Header />
       <Container>
         <Title>
-          <h1>Segunda, 17/05</h1>
-          <p>Nenhum hábito concluído ainda</p>
-          <Text color='#8FC549'>67% dos hábitos concluídos</Text>
+          <h1>{getTodayDate()}</h1>
+          {habitsPercentage > 0 ?
+            <Text color='#8FC549'>{habitsPercentage}% dos hábitos concluídos</Text>
+          :
+            <p>Nenhum hábito concluído ainda</p>
+          }
         </Title>
 
-        <Habit />
-        <Habit checked={true}/>
-        <Habit />
+        {todayHabits.length !== 0 ? todayHabits.map((habit => 
+          <TodayHabit 
+            key={habit.id}
+            habit={habit} 
+            token={token} 
+            setLoading={setLoading} 
+            getTodayHabitList={getTodayHabitList} 
+          />
+        )) : <></>}
 
       </Container>
       <Menu />
