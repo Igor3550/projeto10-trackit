@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import UserToken from '../../contexts/UserToken';
 import UserContext from '../../contexts/UserContext';
 
@@ -16,7 +16,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const { setToken } = useContext(UserToken);
-  const { setUserContext } = useContext(UserContext);
+  const { userContext, setUserContext } = useContext(UserContext);
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -45,10 +45,17 @@ const LoginPage = () => {
       console.log(res.data)
       setToken(res.data.token);
       setUserContext(res.data);
+      localStorage.setItem('trackItUser', JSON.stringify(res.data))
       setLoading(false);
       navigate('/hoje');
     })
   }
+
+  useEffect(() => {
+    if(useContext.email !== ''){
+      navigate('/hoje');
+    }
+  }, [])
 
   return (
     <>

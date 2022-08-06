@@ -9,13 +9,21 @@ import GlobalStyle from './styles/GlobalStyle'
 import UserToken from './contexts/UserToken';
 import UserContext from './contexts/UserContext';
 import UserHabitsPercentage from './contexts/UserHabitsPercentage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
 
   const [token, setToken] = useState('');
   const [userContext, setUserContext] = useState({});
   const [habitsPercentage, setHabitsPercentage] = useState(0);
+
+  useEffect(() => {
+    if(localStorage.getItem('trackItUser') !== null){
+      const trackItUser = JSON.parse(localStorage.getItem('trackItUser'))
+      setUserContext(trackItUser);
+      setToken(trackItUser.token)
+    }
+  }, [])
 
   return (
     <>
