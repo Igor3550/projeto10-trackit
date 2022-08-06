@@ -39,16 +39,20 @@ const TodayPage = () => {
   }, [])
 
   function setPercentage (habits) {
-    const doneHabits = []
-
-    habits.forEach(habit => {
-      if(habit.done){
-        doneHabits.push(habit);
-      }
-    });
-
-    const percentage = parseInt((100 * doneHabits.length) / habits.length);
-    setHabitsPercentage(percentage);
+    if(habits.length === 0){
+      setHabitsPercentage(0)
+    }else{
+      const doneHabits = []
+  
+      habits.forEach(habit => {
+        if(habit.done){
+          doneHabits.push(habit);
+        }
+      });
+  
+      const percentage = parseInt((100 * doneHabits.length) / habits.length);
+      setHabitsPercentage(percentage);
+    }
   }
 
   function getTodayHabitList () {
@@ -65,7 +69,6 @@ const TodayPage = () => {
       }
     })
     promise.then(res => {
-      console.log(res.data);
       setPercentage(res.data);
       setTodayHabits(res.data);
       setLoading(false);

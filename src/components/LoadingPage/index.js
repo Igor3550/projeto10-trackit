@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { TailSpin } from 'react-loader-spinner'
+import { ThreeDots } from 'react-loader-spinner'
 
 const Container = styled.div`
   width: 100vw;
@@ -41,7 +41,7 @@ const LoadingPage = () => {
   return (
       <Container opacity={opacity} >
         <div>
-          <TailSpin color="#00BFFF" height={60} width={60} />
+          <ThreeDots color="#00BFFF" height={60} width={60} />
         </div>
       </Container>
   )

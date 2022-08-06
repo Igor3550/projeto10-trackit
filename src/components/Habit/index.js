@@ -40,17 +40,14 @@ const Habit = ({ habit, token, setLoading, getHabitList }) => {
     const confirm = window.confirm('Deseja deletar este hábito?');
 
     if(confirm){
-      setLoading(true)
       const promise = deleteHabit(habit.id, token);
       promise.catch((error) => {
         console.log(error);
         alert(`Ocorrey um erro: ${error.message}`)
-        setLoading(false);
         getHabitList();
       })
       promise.then(res => {
         console.log(res.data);
-        setLoading(false);
         getHabitList();
       })
     }

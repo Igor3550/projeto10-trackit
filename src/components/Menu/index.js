@@ -13,7 +13,7 @@ import {
 const Menu = () => {
   const navigate = useNavigate()
 
-  const { habitsPercentage, setHabitPercentage } = useContext(UserHabitsPercentage)
+  const { habitsPercentage, setHabitPercentage } = useContext(UserHabitsPercentage);
 
   return (
     <Container>
@@ -23,6 +23,8 @@ const Menu = () => {
       <CenterButton onClick={() => { navigate('/hoje') }}>
         <CircularProgressbar
           value={habitsPercentage}
+          maxValue={100}
+          minValue={0}
           text={`Hoje`}
           background
           backgroundPadding={6}

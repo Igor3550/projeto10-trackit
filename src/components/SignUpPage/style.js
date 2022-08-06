@@ -13,7 +13,7 @@ export const Container = styled.div`
     object-fit: cover;
   }
 
-  div {
+  &>div {
     width: 85%;
     display: flex;
     flex-direction: column;

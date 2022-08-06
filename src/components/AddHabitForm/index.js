@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import UserToken from '../../contexts/UserToken';
 import { useContext } from 'react';
-
 import { createHabit } from '../../services/trackit';
 
 import WeekComponent from '../WeekComponent';
+import LoadingButton from '../LoadingButton';
 
 import {
   AddArea,
   Button
 } from './style'
 
-const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
+const AddHabitForm = ({ setShowHabitForm, setLoading, loading, getHabitList }) => {
 
   const { token } = useContext(UserToken)
 
@@ -65,14 +65,15 @@ const AddHabitForm = ({ setShowHabitForm, setLoading, getHabitList }) => {
   return (
     <AddArea>
       <input 
+        disabled={loading}
         placeholder="nome" 
         value={habitName}
         onChange={(e) => {setHabitName(e.target.value)}}
       />
-      <WeekComponent daysList={daysList} setDaysList={setDaysList} settable={true} />
+      <WeekComponent daysList={daysList} setDaysList={setDaysList} settable={!loading} />
       <div>
-        <Button type="link" onClick={() => {setShowHabitForm(false)}} >Cancelar</Button>
-        <Button onClick={handleSubmit}>Salvar</Button>
+        <Button type="link" onClick={loading ? ()=>{} : () => {setShowHabitForm(false)}} >Cancelar</Button>
+        {loading ? <LoadingButton width='85px' height='35px' iconSize={50} /> : <Button onClick={handleSubmit}>Salvar</Button>}
       </div>
     </AddArea>
   )

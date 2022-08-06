@@ -6,9 +6,9 @@ import { getHabits } from "../../services/trackit";
 
 import Header from "../Header";
 import Menu from "../Menu";
-import LoadingPage from '../LoadingPage';
 import AddHabitForm from "../AddHabitForm";
 import Habit from "../Habit";
+import LoadingPage from "../LoadingPage";
 
 import { 
   Container,
@@ -23,17 +23,19 @@ const HabitPage = () => {
   const [userHabitsList, setUserHabitsList] = useState([]); 
   const [showHabitForm, setShowHabitForm] = useState(false)
   const [loading, setLoading] = useState(false);
+  const [fullLoading, setFullLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true)
+    setFullLoading(true)
     getHabitList();
   }, [])
 
   function getHabitList () {
+    setFullLoading(true)
     const promise = getHabits(token);
     promise.catch((error) => {
       console.log(error);
-      setLoading(false);
+      setFullLoading(false);
       if(error.response.status === 422){
         navigate('/');
         alert(`Usuário deslogado!`);
@@ -43,13 +45,13 @@ const HabitPage = () => {
     })
     promise.then((res) => {
       setUserHabitsList(res.data);
-      setLoading(false);
+      setFullLoading(false);
     });
   }
 
   return (
     <>
-      {loading ? <LoadingPage /> : ''}
+      {fullLoading ? <LoadingPage /> : <></>}
       <Header />
       <Container>
         <span>
@@ -61,6 +63,7 @@ const HabitPage = () => {
           <AddHabitForm 
             setShowHabitForm={setShowHabitForm} 
             setLoading={setLoading} 
+            loading={loading}
             getHabitList={getHabitList}
           /> : <></>
         }
@@ -76,7 +79,7 @@ const HabitPage = () => {
               habit={habit} 
               key={index} 
               token={token} 
-              setLoading={setLoading} 
+              setLoading={setFullLoading} 
               getHabitList={getHabitList} 
             />
           )

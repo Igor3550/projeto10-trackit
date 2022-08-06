@@ -10,7 +10,7 @@ import {
 const TodayHabit = ({ habit, token, setLoading, getTodayHabitList }) => {
 
   const textColor = (habit.done ? '#8FC549' : '#666666');
-  const isRecord = ((habit.highestSequence !== 0 && habit.highestSequence === habit.currentSequence) ? true : false)
+  const isRecord = ((habit.highestSequence !== 0 && habit.highestSequence === habit.currentSequence && habit.done) ? true : false)
 
   function handleCheckHabit (){
     setLoading(true);
