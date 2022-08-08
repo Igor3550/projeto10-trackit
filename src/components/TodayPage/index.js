@@ -35,7 +35,6 @@ const TodayPage = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
     getTodayHabitList();
   }, [])
 
@@ -62,9 +61,9 @@ const TodayPage = () => {
     promise.catch(error => {
       console.log(error);
       if(error.response.status === 422){
-        navigate('/');
         setLoading(false);
         alert(`Usuário deslogado!`);
+        navigate('/');
       }else{
         alert(`Ocorreu um erro: ${error.message}`)
         setLoading(false);
@@ -98,6 +97,7 @@ const TodayPage = () => {
               habit={habit} 
               token={token} 
               getTodayHabitList={getTodayHabitList} 
+              setLoading={setLoading}
             />
           )) : <></>
 
