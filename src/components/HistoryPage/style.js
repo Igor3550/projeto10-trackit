@@ -13,7 +13,7 @@ export const Container = styled.div`
 
   background-color: #f2f2f2;
 
-  div {
+  &>div {
     width: 90%;
 
     h1 {

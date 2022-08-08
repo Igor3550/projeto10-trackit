@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from 'react-loader-spinner'
 
 import UserToken from "../../contexts/UserToken";
 import { getHabits } from "../../services/trackit";
@@ -8,11 +9,10 @@ import Header from "../Header";
 import Menu from "../Menu";
 import AddHabitForm from "../AddHabitForm";
 import Habit from "../Habit";
-import LoadingPage from "../LoadingPage";
-
 import { 
   Container,
-  AddButton
+  AddButton,
+  Loading
 } from "./style";
 
 const HabitPage = () => {
@@ -51,7 +51,6 @@ const HabitPage = () => {
 
   return (
     <>
-      {fullLoading ? <LoadingPage /> : <></>}
       <Header />
       <Container>
         <span>
@@ -68,7 +67,9 @@ const HabitPage = () => {
           /> : <></>
         }
 
-        {userHabitsList.length === 0 ? (
+        {fullLoading ? <Loading><ThreeDots color="#00BFFF" height={80} width={80} /></Loading> :
+
+        userHabitsList.length === 0 ? (
           <div>
             <p>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</p>
           </div>
@@ -91,8 +92,5 @@ const HabitPage = () => {
     </>
   )
 }
-//<Habit />
-//<Habit />
-//<AddHabit />
 
 export default HabitPage;

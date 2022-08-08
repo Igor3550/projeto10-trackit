@@ -1,10 +1,10 @@
 import dayjs from 'dayjs';
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ThreeDots } from 'react-loader-spinner';
 
 import Header from "../Header";
 import Menu from "../Menu";
-import LoadingPage from '../LoadingPage'
 import UserToken from '../../contexts/UserToken';
 import UserHabitsPercentage from '../../contexts/UserHabitsPercentage';
 import TodayHabit from '../TodayHabit'
@@ -13,7 +13,8 @@ import { getTodayHabits } from '../../services/trackit';
 import {
   Container,
   Title,
-  Text
+  Text,
+  Loading
 } from './style'
 
 function getTodayDate () {
@@ -56,6 +57,7 @@ const TodayPage = () => {
   }
 
   function getTodayHabitList () {
+    setLoading(true)
     const promise = getTodayHabits(token);
     promise.catch(error => {
       console.log(error);
@@ -77,7 +79,6 @@ const TodayPage = () => {
 
   return (
     <>
-      {loading ? <LoadingPage /> : <></>}
       <Header />
       <Container>
         <Title>
@@ -89,15 +90,18 @@ const TodayPage = () => {
           }
         </Title>
 
-        {todayHabits.length !== 0 ? todayHabits.map((habit => 
-          <TodayHabit 
-            key={habit.id}
-            habit={habit} 
-            token={token} 
-            setLoading={setLoading} 
-            getTodayHabitList={getTodayHabitList} 
-          />
-        )) : <></>}
+        {loading ? <Loading><ThreeDots color="#00BFFF" height={80} width={80} /></Loading> :
+
+          todayHabits.length !== 0 ? todayHabits.map((habit => 
+            <TodayHabit 
+              key={habit.id}
+              habit={habit} 
+              token={token} 
+              getTodayHabitList={getTodayHabitList} 
+            />
+          )) : <></>
+
+        }
 
       </Container>
       <Menu />

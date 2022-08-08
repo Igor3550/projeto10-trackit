@@ -33,3 +33,9 @@ export const Title = styled.div`
 export const Text = styled.span`
   color: ${props => props.color ? props.color : '#666666'};
 `;
+
+export const Loading = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;

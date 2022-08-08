@@ -48,3 +48,9 @@ export const AddButton = styled.button`
   color: #fff;
   font-size: 27px;
 `;
+
+export const Loading = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;

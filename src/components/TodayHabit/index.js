@@ -7,22 +7,19 @@ import {
   Text
 } from './style'
 
-const TodayHabit = ({ habit, token, setLoading, getTodayHabitList }) => {
+const TodayHabit = ({ habit, token, getTodayHabitList }) => {
 
   const textColor = (habit.done ? '#8FC549' : '#666666');
   const isRecord = ((habit.highestSequence !== 0 && habit.highestSequence === habit.currentSequence && habit.done) ? true : false)
 
   function handleCheckHabit (){
-    setLoading(true);
     if(habit.done === false){
       const promise = checkHabit(habit.id, token);
       promise.catch(error => {
         console.log(error);
         alert(`Ocorreu um erro: ${error.message}`);
-        setLoading(false);
       })
-      promise.then(res => {
-        setLoading(false);
+      promise.then(() => {
         getTodayHabitList();
       })
     }else{
@@ -30,10 +27,8 @@ const TodayHabit = ({ habit, token, setLoading, getTodayHabitList }) => {
       promise.catch(error => {
         console.log(error);
         alert(`Ocorreu um erro: ${error.message}`);
-        setLoading(false);
       })
-      promise.then(res => {
-        setLoading(false);
+      promise.then(() => {
         getTodayHabitList();
       })
     }

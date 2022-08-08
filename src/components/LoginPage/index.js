@@ -16,7 +16,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
 
   const { setToken } = useContext(UserToken);
-  const { userContext, setUserContext } = useContext(UserContext);
+  const { setUserContext } = useContext(UserContext);
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -52,7 +52,10 @@ const LoginPage = () => {
   }
 
   useEffect(() => {
-    if(useContext.email !== ''){
+    if(localStorage.getItem('trackItUser') !== null){
+      const trackItUser = JSON.parse(localStorage.getItem('trackItUser'))
+      setUserContext(trackItUser);
+      setToken(trackItUser.token);
       navigate('/hoje');
     }
   }, [])

@@ -57,8 +57,9 @@ function unCheckHabit (habitId, token) {
   return promise;
 }
 
-function historyTodayHabits (habitId) {
-  const promise = axios.get(`${BASE_URL}/habits/history/daily`);
+function getHistoryHabits (token) {
+  const config = createHeaders(token);
+  const promise = axios.get(`${BASE_URL}/habits/history/daily`, config);
   return promise;
 }
 
@@ -71,5 +72,5 @@ export {
   getTodayHabits, 
   checkHabit, 
   unCheckHabit, 
-  historyTodayHabits 
+  getHistoryHabits 
 };

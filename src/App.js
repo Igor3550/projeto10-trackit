@@ -17,14 +17,6 @@ function App() {
   const [userContext, setUserContext] = useState({});
   const [habitsPercentage, setHabitsPercentage] = useState(0);
 
-  useEffect(() => {
-    if(localStorage.getItem('trackItUser') !== null){
-      const trackItUser = JSON.parse(localStorage.getItem('trackItUser'))
-      setUserContext(trackItUser);
-      setToken(trackItUser.token)
-    }
-  }, [])
-
   return (
     <>
       <GlobalStyle />
