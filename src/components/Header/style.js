@@ -17,6 +17,7 @@ export const Container = styled.div`
   top: 0;
 
   box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.2);
+  z-index: 10;
 
   h1 {
     font-family: 'Playball', cursive;

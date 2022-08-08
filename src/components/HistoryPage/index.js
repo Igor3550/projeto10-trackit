@@ -12,7 +12,9 @@ const HistoryPage = () => {
       <Container>
         <div>
           <h1>Histórico</h1>
-          <MyCalendar />
+          <div>
+            <MyCalendar />
+          </div>
         </div>
       </Container>
       <Menu />

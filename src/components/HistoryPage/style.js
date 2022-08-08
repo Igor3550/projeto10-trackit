@@ -2,14 +2,14 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   width: 100vw;
-  height: 79vh;
+  height: 100vh;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: scroll;
   overflow-x: hidden;
-  margin: 70px 0;
+  padding: 70px 0;
 
   background-color: #f2f2f2;
 
@@ -25,6 +25,13 @@ export const Container = styled.div`
     p{
       font-size: 18px;
       color: #666666;
+    }
+
+    &>div {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
   }
 `;
